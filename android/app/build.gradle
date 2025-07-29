@@ -85,6 +85,12 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    // ✅ Prevent .so file conflicts (libfbjni, libhermes, etc.)
+    packagingOptions {
+        pickFirst '**/libfbjni.so'
+        pickFirst '**/libc++_shared.so'
+        pickFirst '**/libhermes.so'
+    }
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
