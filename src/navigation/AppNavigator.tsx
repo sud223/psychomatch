@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { RootStackParamList } from '../types';
@@ -35,8 +38,8 @@ const MainTabs = () => (
       tabBarInactiveTintColor: '#8E8E93',
       headerShown: false,
     }}>
-    <Tab.Screen 
-      name="Home" 
+    <Tab.Screen
+      name="Home"
       component={HomeScreen}
       options={{
         tabBarLabel: 'Home',
@@ -45,8 +48,8 @@ const MainTabs = () => (
         // ),
       }}
     />
-    <Tab.Screen 
-      name="Quiz" 
+    <Tab.Screen
+      name="Quiz"
       component={QuizScreen}
       options={{
         tabBarLabel: 'Quiz',
@@ -55,8 +58,8 @@ const MainTabs = () => (
         // ),
       }}
     />
-    <Tab.Screen 
-      name="Profile" 
+    <Tab.Screen
+      name="Profile"
       component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',
@@ -65,8 +68,8 @@ const MainTabs = () => (
         // ),
       }}
     />
-    <Tab.Screen 
-      name="Settings" 
+    <Tab.Screen
+      name="Settings"
       component={SettingsScreen}
       options={{
         tabBarLabel: 'Settings',
@@ -91,11 +94,11 @@ const AppNavigator: React.FC = () => {
     try {
       const authenticated = await authService.isAuthenticated();
       setIsAuthenticated(authenticated);
-      
+
       // Check if intro should be shown (first time user)
       // This would typically check AsyncStorage for a flag
       setShowIntro(!authenticated);
-      
+
       setIsLoading(false);
     } catch (error) {
       console.error('Auth check error:', error);
@@ -103,26 +106,25 @@ const AppNavigator: React.FC = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Splash" component={SplashScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {showIntro && !isAuthenticated && (
+        {isLoading ? (
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        ) : showIntro && !isAuthenticated ? (
           <Stack.Screen name="Intro" component={IntroScreen} />
-        )}
-        {!isAuthenticated ? (
-          <Stack.Screen name="Auth" component={AuthStack} options={{ headerShown: false }} />
+        ) : !isAuthenticated ? (
+          <Stack.Screen
+            name="Auth"
+            component={AuthStack}
+            options={{ headerShown: false }}
+          />
         ) : (
-          <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="Main"
+            component={MainTabs}
+            options={{ headerShown: false }}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>

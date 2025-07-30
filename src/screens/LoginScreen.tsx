@@ -50,7 +50,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       if (response.success) {
         // Navigation will be handled by AppNavigator
         Alert.alert('Success', 'Login successful!');
-        navigation.navigate('Main');
       } else {
         Alert.alert('Error', response.message || 'Login failed');
       }
