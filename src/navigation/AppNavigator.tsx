@@ -2,10 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeIcon from '../assets/icons/home.svg';
-import QuizIcon from '../assets/icons/quiz.svg';
-import PersonIcon from '../assets/icons/person.svg';
-import SettingsIcon from '../assets/icons/settings.svg';
 
 import { RootStackParamList } from '../types';
 import { authService } from '../services/auth';
@@ -44,9 +40,9 @@ const MainTabs = () => (
       component={HomeScreen}
       options={{
         tabBarLabel: 'Home',
-        tabBarIcon: ({ color, size }) => (
-          <HomeIcon width={size} height={size} fill={color} />
-        ),
+        // tabBarIcon: ({ color, size }) => (
+        //   <Icon name="home" size={size} color={color} />
+        // ),
       }}
     />
     <Tab.Screen
@@ -54,9 +50,9 @@ const MainTabs = () => (
       component={QuizScreen}
       options={{
         tabBarLabel: 'Quiz',
-        tabBarIcon: ({ color, size }) => (
-          <QuizIcon width={size} height={size} fill={color} />
-        ),
+        // tabBarIcon: ({ color, size }) => (
+        //   <Icon name="quiz" size={size} color={color} />
+        // ),
       }}
     />
     <Tab.Screen
@@ -64,9 +60,9 @@ const MainTabs = () => (
       component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',
-        tabBarIcon: ({ color, size }) => (
-          <PersonIcon width={size} height={size} fill={color} />
-        ),
+        // tabBarIcon: ({ color, size }) => (
+        //   <Icon name="person" size={size} color={color} />
+        // ),
       }}
     />
     <Tab.Screen
@@ -74,9 +70,9 @@ const MainTabs = () => (
       component={SettingsScreen}
       options={{
         tabBarLabel: 'Settings',
-        tabBarIcon: ({ color, size }) => (
-          <SettingsIcon width={size} height={size} fill={color} />
-        ),
+        // tabBarIcon: ({ color, size }) => (
+        //   <Icon name="settings" size={size} color={color} />
+        // ),
       }}
     />
   </Tab.Navigator>
