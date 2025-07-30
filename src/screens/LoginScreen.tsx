@@ -17,9 +17,10 @@ import { validation } from '../utils';
 
 interface LoginScreenProps {
   navigation?: any;
+  onLogin: () => void;
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -50,6 +51,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       if (response.success) {
         // Navigation will be handled by AppNavigator
         Alert.alert('Success', 'Login successful!');
+        onLogin();
       } else {
         Alert.alert('Error', response.message || 'Login failed');
       }

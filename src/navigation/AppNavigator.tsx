@@ -108,7 +108,14 @@ const AppNavigator: React.FC = () => {
         ) : (
           <>
             <Stack.Screen name="Intro" component={IntroScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Login">
+              {(props) => (
+                <LoginScreen
+                  {...props}
+                  onLogin={() => setIsAuthenticated(true)}
+                />
+              )}
+            </Stack.Screen>
             <Stack.Screen name="Signup" component={SignupScreen} />
           </>
         )}
