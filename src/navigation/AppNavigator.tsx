@@ -22,14 +22,6 @@ import SettingsScreen from '../screens/SettingsScreen';
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
-// Auth Stack Navigator
-const AuthStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Login" component={LoginScreen} />
-    <Stack.Screen name="Signup" component={SignupScreen} />
-  </Stack.Navigator>
-);
-
 // Main Tab Navigator
 const MainTabs = () => (
   <Tab.Navigator
@@ -111,20 +103,14 @@ const AppNavigator: React.FC = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isLoading ? (
           <Stack.Screen name="Splash" component={SplashScreen} />
-        ) : showIntro && !isAuthenticated ? (
-          <Stack.Screen name="Intro" component={IntroScreen} />
-        ) : !isAuthenticated ? (
-          <Stack.Screen
-            name="Auth"
-            component={AuthStack}
-            options={{ headerShown: false }}
-          />
+        ) : isAuthenticated ? (
+          <Stack.Screen name="Main" component={MainTabs} />
         ) : (
-          <Stack.Screen
-            name="Main"
-            component={MainTabs}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen name="Intro" component={IntroScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

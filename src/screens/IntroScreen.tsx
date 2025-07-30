@@ -16,12 +16,12 @@ interface IntroScreenProps {
 const IntroScreen: React.FC<IntroScreenProps> = ({ navigation }) => {
   const handleGetStarted = () => {
     // Navigate to login screen
-    navigation.replace('Auth');
+    navigation.replace('Login');
   };
 
   const handleSkip = () => {
     // Skip intro and go to login
-    navigation.replace('Auth');
+    navigation.replace('Login');
   };
 
   return (
