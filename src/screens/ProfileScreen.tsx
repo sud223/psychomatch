@@ -14,9 +14,13 @@ import { User } from '../types';
 
 interface ProfileScreenProps {
   navigation?: any;
+  onLogout: () => void;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({
+  navigation,
+  onLogout,
+}) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -55,6 +59,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
           onPress: async () => {
             try {
               await authService.logout();
+              onLogout();
               // Navigation will be handled by AppNavigator
             } catch (error) {
               Alert.alert('Error', 'Failed to logout');

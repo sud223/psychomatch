@@ -23,7 +23,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 // Main Tab Navigator
-const MainTabs = () => (
+const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
   <Tab.Navigator
     screenOptions={{
       tabBarActiveTintColor: '#007AFF',
@@ -50,16 +50,9 @@ const MainTabs = () => (
         // ),
       }}
     />
-    <Tab.Screen
-      name="Profile"
-      component={ProfileScreen}
-      options={{
-        tabBarLabel: 'Profile',
-        // tabBarIcon: ({ color, size }) => (
-        //   <Icon name="person" size={size} color={color} />
-        // ),
-      }}
-    />
+    <Tab.Screen name="Profile">
+      {(props) => <ProfileScreen {...props} onLogout={onLogout} />}
+    </Tab.Screen>
     <Tab.Screen
       name="Settings"
       component={SettingsScreen}
@@ -104,7 +97,11 @@ const AppNavigator: React.FC = () => {
         {isLoading ? (
           <Stack.Screen name="Splash" component={SplashScreen} />
         ) : isAuthenticated ? (
-          <Stack.Screen name="Main" component={MainTabs} />
+          <Stack.Screen name="Main">
+            {(props) => (
+              <MainTabs {...props} onLogout={() => setIsAuthenticated(false)} />
+            )}
+          </Stack.Screen>
         ) : (
           <>
             <Stack.Screen name="Intro" component={IntroScreen} />

@@ -87,9 +87,9 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ navigation }) => {
     ],
   };
 
-  useEffect(() => {
+  useState(() => {
     setCurrentQuiz(mockQuiz);
-  }, []);
+  });
 
   const handleAnswerSelect = (answerIndex: number) => {
     const newAnswers = [...selectedAnswers];
