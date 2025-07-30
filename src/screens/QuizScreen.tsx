@@ -88,11 +88,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ navigation }) => {
   };
 
   useEffect(() => {
-    try {
-      setCurrentQuiz(mockQuiz);
-    } catch (error) {
-      console.error('Error setting quiz data:', error);
-    }
+    setCurrentQuiz(mockQuiz);
   }, []);
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -141,6 +137,13 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ navigation }) => {
     navigation?.navigate('Home');
   };
 
+  if (!currentQuiz) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.loadingText}>Loading quiz...</Text>
+      </View>
+    );
+  }
 
   if (showResults) {
     return (
@@ -189,6 +192,14 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </ScrollView>
+      </View>
+    );
+  }
+
+  if (!currentQuiz) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.loadingText}>Loading quiz...</Text>
       </View>
     );
   }
