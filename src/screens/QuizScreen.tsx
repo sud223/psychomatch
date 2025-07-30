@@ -6,12 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
-  ProgressBarAndroid,
-  Platform,
 } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING } from '../constants';
 import { apiService } from '../services/api';
 import { QuizQuestion, Quiz } from '../types';
+import ProgressBar from '../components/ProgressBar';
 
 interface QuizScreenProps {
   navigation?: any;
@@ -158,20 +157,7 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ navigation }) => {
         <Text style={styles.questionCounter}>
           Question {currentQuestionIndex + 1} of {currentQuiz.questions.length}
         </Text>
-        <View style={styles.progressContainer}>
-          {Platform.OS === 'android' ? (
-            <ProgressBarAndroid
-              styleAttr="Horizontal"
-              indeterminate={false}
-              progress={progress}
-              color={COLORS.primary}
-            />
-          ) : (
-            <View style={styles.progressBar}>
-              <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
-            </View>
-          )}
-        </View>
+        <ProgressBar progress={progress} />
       </View>
 
       <ScrollView style={styles.content}>
