@@ -17,7 +17,7 @@ interface QuizScreenProps {
 }
 
 const QuizScreen: React.FC<QuizScreenProps> = ({ navigation }) => {
-  const [currentQuiz, setCurrentQuiz] = useState<Quiz | null>(null);
+  const [currentQuiz, setCurrentQuiz] = useState<Quiz | null>(mockQuiz);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -87,9 +87,6 @@ const QuizScreen: React.FC<QuizScreenProps> = ({ navigation }) => {
     ],
   };
 
-  useState(() => {
-    setCurrentQuiz(mockQuiz);
-  });
 
   const handleAnswerSelect = (answerIndex: number) => {
     const newAnswers = [...selectedAnswers];
