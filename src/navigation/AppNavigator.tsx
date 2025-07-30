@@ -5,6 +5,7 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { RootStackParamList } from '../types';
 import { authService } from '../services/auth';
@@ -35,9 +36,9 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       component={HomeScreen}
       options={{
         tabBarLabel: 'Home',
-        // tabBarIcon: ({ color, size }) => (
-        //   <Icon name="home" size={size} color={color} />
-        // ),
+        tabBarIcon: ({ color, size }) => (
+          <Icon name="home" size={size} color={color} />
+        ),
       }}
     />
     <Tab.Screen
@@ -45,12 +46,19 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       component={QuizScreen}
       options={{
         tabBarLabel: 'Quiz',
-        // tabBarIcon: ({ color, size }) => (
-        //   <Icon name="quiz" size={size} color={color} />
-        // ),
+        tabBarIcon: ({ color, size }) => (
+          <Icon name="quiz" size={size} color={color} />
+        ),
       }}
     />
-    <Tab.Screen name="Profile">
+    <Tab.Screen
+      name="Profile"
+      options={{
+        tabBarLabel: 'Profile',
+        tabBarIcon: ({ color, size }) => (
+          <Icon name="person" size={size} color={color} />
+        ),
+      }}>
       {(props) => <ProfileScreen {...props} onLogout={onLogout} />}
     </Tab.Screen>
     <Tab.Screen
@@ -58,9 +66,9 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       component={SettingsScreen}
       options={{
         tabBarLabel: 'Settings',
-        // tabBarIcon: ({ color, size }) => (
-        //   <Icon name="settings" size={size} color={color} />
-        // ),
+        tabBarIcon: ({ color, size }) => (
+          <Icon name="settings" size={size} color={color} />
+        ),
       }}
     />
   </Tab.Navigator>
