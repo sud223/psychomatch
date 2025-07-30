@@ -1,5 +1,6 @@
+import { mockQuiz } from '../data/mockQuiz';
 import { API_BASE_URL, API_TIMEOUT } from '../constants';
-import { ApiResponse } from '../types';
+import { ApiResponse, Quiz } from '../types';
 
 class ApiService {
   private baseURL: string;
@@ -90,6 +91,17 @@ class ApiService {
     return this.request<T>(endpoint, {
       method: 'DELETE',
       headers,
+    });
+  }
+
+  async getQuiz(): Promise<ApiResponse<Quiz>> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          success: true,
+          data: mockQuiz,
+        });
+      }, 1000);
     });
   }
 }
