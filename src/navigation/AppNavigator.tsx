@@ -5,7 +5,7 @@ import {
   StackNavigationProp,
 } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { RootStackParamList } from '../types';
 import { authService } from '../services/auth';
@@ -37,7 +37,7 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       options={{
         tabBarLabel: 'Home',
         tabBarIcon: ({ color, size }) => (
-          <Icon name="home" size={size} color={color} />
+          <MaterialIcons name="home" size={size} color={color} />
         ),
       }}
     />
@@ -47,7 +47,7 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       options={{
         tabBarLabel: 'Quiz',
         tabBarIcon: ({ color, size }) => (
-          <Icon name="quiz" size={size} color={color} />
+          <MaterialIcons name="quiz" size={size} color={color} />
         ),
       }}
     />
@@ -56,7 +56,7 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       options={{
         tabBarLabel: 'Profile',
         tabBarIcon: ({ color, size }) => (
-          <Icon name="person" size={size} color={color} />
+          <MaterialIcons name="person" size={size} color={color} />
         ),
       }}>
       {(props) => <ProfileScreen {...props} onLogout={onLogout} />}
@@ -67,7 +67,7 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       options={{
         tabBarLabel: 'Settings',
         tabBarIcon: ({ color, size }) => (
-          <Icon name="settings" size={size} color={color} />
+          <MaterialIcons name="settings" size={size} color={color} />
         ),
       }}
     />
