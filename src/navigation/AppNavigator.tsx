@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import {
-  createStackNavigator,
-  StackNavigationProp,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialIcons } from '@expo/vector-icons';
+import HomeIcon from '../assets/icons/home.svg';
+import QuizIcon from '../assets/icons/quiz.svg';
+import PersonIcon from '../assets/icons/person.svg';
+import SettingsIcon from '../assets/icons/settings.svg';
 
 import { RootStackParamList } from '../types';
 import { authService } from '../services/auth';
@@ -23,8 +23,16 @@ import SettingsScreen from '../screens/SettingsScreen';
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
+// Auth Stack Navigator
+const AuthStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Login" component={LoginScreen} />
+    <Stack.Screen name="Signup" component={SignupScreen} />
+  </Stack.Navigator>
+);
+
 // Main Tab Navigator
-const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
+const MainTabs = () => (
   <Tab.Navigator
     screenOptions={{
       tabBarActiveTintColor: '#007AFF',
@@ -37,7 +45,7 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       options={{
         tabBarLabel: 'Home',
         tabBarIcon: ({ color, size }) => (
-          <MaterialIcons name="home" size={size} color={color} />
+          <HomeIcon width={size} height={size} fill={color} />
         ),
       }}
     />
@@ -47,27 +55,27 @@ const MainTabs = ({ onLogout }: { onLogout: () => void }) => (
       options={{
         tabBarLabel: 'Quiz',
         tabBarIcon: ({ color, size }) => (
-          <MaterialIcons name="quiz" size={size} color={color} />
+          <QuizIcon width={size} height={size} fill={color} />
         ),
       }}
     />
     <Tab.Screen
       name="Profile"
+      component={ProfileScreen}
       options={{
         tabBarLabel: 'Profile',
         tabBarIcon: ({ color, size }) => (
-          <MaterialIcons name="person" size={size} color={color} />
+          <PersonIcon width={size} height={size} fill={color} />
         ),
-      }}>
-      {(props) => <ProfileScreen {...props} onLogout={onLogout} />}
-    </Tab.Screen>
+      }}
+    />
     <Tab.Screen
       name="Settings"
       component={SettingsScreen}
       options={{
         tabBarLabel: 'Settings',
         tabBarIcon: ({ color, size }) => (
-          <MaterialIcons name="settings" size={size} color={color} />
+          <SettingsIcon width={size} height={size} fill={color} />
         ),
       }}
     />
@@ -99,30 +107,26 @@ const AppNavigator: React.FC = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isLoading ? (
-          <Stack.Screen name="Splash" component={SplashScreen} />
-        ) : isAuthenticated ? (
-          <Stack.Screen name="Main">
-            {(props) => (
-              <MainTabs {...props} onLogout={() => setIsAuthenticated(false)} />
-            )}
-          </Stack.Screen>
+        {showIntro && !isAuthenticated && (
+          <Stack.Screen name="Intro" component={IntroScreen} />
+        )}
+        {!isAuthenticated ? (
+          <Stack.Screen name="Auth" component={AuthStack} options={{ headerShown: false }} />
         ) : (
-          <>
-            <Stack.Screen name="Intro" component={IntroScreen} />
-            <Stack.Screen name="Login">
-              {(props) => (
-                <LoginScreen
-                  {...props}
-                  onLogin={() => setIsAuthenticated(true)}
-                />
-              )}
-            </Stack.Screen>
-            <Stack.Screen name="Signup" component={SignupScreen} />
-          </>
+          <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
